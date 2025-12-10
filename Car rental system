@@ -1,0 +1,62 @@
+import java.util.*;
+
+class Car {
+    String model;
+    double rentPerDay;
+
+    Car(String model, double rentPerDay) {
+        this.model = model;
+        this.rentPerDay = rentPerDay;
+    }
+}
+
+class RentalSystem {
+    Map<String, Car> availableCars = new HashMap<>();
+    List<String> rentedCars = new ArrayList<>();
+
+    void addCar(String model, double rentPerDay) {
+        Car car = new Car(model, rentPerDay);
+        availableCars.put(model, car);
+    }
+
+    void rentCar(String model, int days) {
+        if (availableCars.containsKey(model)) {
+            Car car = availableCars.get(model);
+            double totalRent = car.rentPerDay * days;
+
+            System.out.println("Rented " + model + " for " + days + " days. Total Rent: $" + totalRent);
+
+            rentedCars.add(model);
+            availableCars.remove(model);
+        } else {
+            System.out.println("Car not available for rent.");
+        }
+    }
+
+    void displayAvailableCars() {
+        System.out.println("Available Cars:");
+        for (String model : availableCars.keySet()) {
+            System.out.println(model);
+        }
+    }
+}
+
+public class CarRentalSystem {
+    public static void main(String[] args) {
+        RentalSystem rentalSystem = new RentalSystem();
+
+        // Add cars to the system
+        rentalSystem.addCar("Sedan", 50.0);
+        rentalSystem.addCar("SUV", 70.0);
+        rentalSystem.addCar("Compact", 40.0);
+
+        // Display available cars
+        rentalSystem.displayAvailableCars();
+
+        // Rent a car
+        rentalSystem.rentCar("Sedan", 3);
+
+        // Display available cars after renting
+        rentalSystem.displayAvailableCars();
+    }
+}
